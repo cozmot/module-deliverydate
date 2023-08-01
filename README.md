@@ -1,5 +1,7 @@
 # magento2-chatgpt
 
-Cozmot ChatGPT Extension for Magento 2 for product description generation. This
-extension empowers online store owners with a comprehensive set of functionalities to streamline the process and create
-product descriptions.
+Cozmot Delivery Date Extension for Magento 2 Enables Customer to add Delivery Date of his/her choice on Product page before Add-To-Cart
+## Installation
+composer require cozmot/module-deliverydate
+bin/magento module:enable Cozmot_DeliveryDate
+bin/magento setup:upgrade

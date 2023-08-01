@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+  ~ Cozmot
+  ~
+  ~ NOTICE OF LICENSE
+  ~ This source file is subject to the cozmot.com license that is
+  ~ available through the world-wide-web at this URL:
+  ~ https://cozmot.com/end-user-license-agreement
+  ~
+  ~ DISCLAIMER
+  ~
+  ~ Do not edit or add to this file if you wish to upgrade this extension to newer
+  ~ version in the future.
+  ~
+  ~ @category    Commerce
+  ~ @package     Module
+  ~ @copyright   Copyright (c) Cozmot (https://cozmot.com/)
+  ~ @license     https://cozmot.com/end-user-license-agreement
+  ~
+  -->
+
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="css/add_to_cart.css"/>
+    </head>
+    <body>
+        <referenceBlock name="product.info.addtocart">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Cozmot_DeliveryDate::catalog/product/view/addtocart.phtml
+                </argument>
+            </action>
+            <arguments>
+                <argument name="view_model" xsi:type="object">Cozmot\DeliveryDate\ViewModel\DeliveryDate</argument>
+            </arguments>
+        </referenceBlock>
+        <!--   For configurable     -->
+        <referenceBlock name="product.info.addtocart.additional">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Cozmot_DeliveryDate::catalog/product/view/addtocart.phtml
+                </argument>
+            </action>
+            <arguments>
+                <argument name="view_model" xsi:type="object">Cozmot\DeliveryDate\ViewModel\DeliveryDate</argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

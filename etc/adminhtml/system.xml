@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<!--
+  ~ Cozmot
+  ~
+  ~ NOTICE OF LICENSE
+  ~ This source file is subject to the cozmot.com license that is
+  ~ available through the world-wide-web at this URL:
+  ~ https://cozmot.com/end-user-license-agreement
+  ~
+  ~ DISCLAIMER
+  ~
+  ~ Do not edit or add to this file if you wish to upgrade this extension to newer
+  ~ version in the future.
+  ~
+  ~ @category    Commerce
+  ~ @package     Module
+  ~ @copyright   Copyright (c) Cozmot (https://cozmot.com/)
+  ~ @license     https://cozmot.com/end-user-license-agreement
+  ~
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="cozmot" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+            <label>Delivery Date</label>
+            <tab>cozmot</tab>
+            <resource>Cozmot_DeliveryDate::config_cozmot_deliverydate</resource>
+            <group id="general" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+                <label>General</label>
+                <field id="enable_delivery_date" type="select" sortOrder="10" showInWebsite="1" showInStore="1"
+                       showInDefault="1" translate="label">
+                    <label>Enable Delivery Date</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="max_delivery_date" type="text" sortOrder="20" showInWebsite="1" showInStore="1"
+                       showInDefault="1" translate="label">
+                    <label>Max Delivery Date Delay</label>
+                    <validate>required-entry integer</validate>
+                    <comment>Max delivery date delay in days</comment>
+                    <depends>
+                        <field id="*/*/enable_delivery_date">1</field>
+                    </depends>
+                </field>
+                <field id="delivery_date_label" type="text" sortOrder="30" showInWebsite="1" showInStore="1"
+                       showInDefault="1" translate="label">
+                    <label>Delivery Date Label</label>
+                    <comment>Frontend label</comment>
+                    <depends>
+                        <field id="*/*/enable_delivery_date">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

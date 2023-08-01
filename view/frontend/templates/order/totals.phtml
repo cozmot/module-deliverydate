@@ -1,0 +1,58 @@
+<?php
+/**
+ * Cozmot
+ *
+ * NOTICE OF LICENSE
+ * This source file is subject to the cozmot.com license that is
+ * available through the world-wide-web at this URL:
+ * https://cozmot.com/end-user-license-agreement
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Commerce
+ * @package     Module
+ * @copyright   Copyright (c) Cozmot (https://cozmot.com/)
+ * @license     https://cozmot.com/end-user-license-agreement
+ *
+ */
+
+/**
+ * @var $block \Magento\Sales\Block\Order\Totals
+ * @see \Magento\Sales\Block\Order\Totals
+ */
+/** @var $viewModel Cozmot\DeliveryDate\ViewModel\DeliveryDate */
+?>
+<?php $viewModel = $block->getViewModel(); ?>
+<?php foreach ($block->getTotals() as $_code => $_total) : ?>
+    <?php if ($_total->getBlockName()) : ?>
+        <?= $block->getChildHtml($_total->getBlockName(), false) ?>
+    <?php else : ?>
+        <tr class="<?= $block->escapeHtmlAttr($_code) ?>">
+            <?php if ($viewModel->showDeliveryDate()) { ?>
+            <th colspan="5" class="mark" scope="row">
+                <?php } else { ?>
+            <th <?= /* @noEscape */
+            $block->getLabelProperties() ?> scope="row">
+                <?php } ?>
+                <?php if ($_total->getStrong()) : ?>
+                    <strong><?= $block->escapeHtml($_total->getLabel()) ?></strong>
+                <?php else : ?>
+                    <?= $block->escapeHtml($_total->getLabel()) ?>
+                <?php endif ?>
+            </th>
+            <td <?= /* @noEscape */
+            $block->getValueProperties() ?> data-th="<?= $block->escapeHtmlAttr($_total->getLabel()) ?>">
+                <?php if ($_total->getStrong()) : ?>
+                    <strong><?= /* @noEscape */
+                        $block->formatValue($_total) ?></strong>
+                <?php else : ?>
+                    <?= /* @noEscape */
+                    $block->formatValue($_total) ?>
+                <?php endif ?>
+            </td>
+        </tr>
+    <?php endif; ?>
+<?php endforeach ?>

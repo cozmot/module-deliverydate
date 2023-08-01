@@ -1,0 +1,90 @@
+<?php
+/**
+ * Cozmot
+ *
+ * NOTICE OF LICENSE
+ * This source file is subject to the cozmot.com license that is
+ * available through the world-wide-web at this URL:
+ * https://cozmot.com/end-user-license-agreement
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Commerce
+ * @package     Module
+ * @copyright   Copyright (c) Cozmot (https://cozmot.com/)
+ * @license     https://cozmot.com/end-user-license-agreement
+ *
+ */
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+/** @var $viewModel Cozmot\DeliveryDate\ViewModel\DeliveryDate */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php $viewModel = $block->getViewModel(); ?>
+<?php if ($_product->isSaleable()) : ?>
+    <div class="box-tocart">
+        <div class="fieldset">
+            <?php if ($block->shouldRenderQuantity()) : ?>
+                <div class="field qty">
+                    <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+                    <div class="control">
+                        <input type="number"
+                               name="qty"
+                               id="qty"
+                               min="0"
+                               value="<?= $block->getProductDefaultQty() * 1 ?>"
+                               title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                               class="input-text qty"
+                               data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                        />
+                    </div>
+                </div>
+                <!-- Delivery Date -->
+            <?php if ($viewModel->showDeliveryDate()) { ?>
+                <label class="label"
+                       for="qty"><span><?= $block->escapeHtml(__($viewModel->getDeliveryDateLabel())) ?></span></label>
+            <input type="text" name="delivery_date" id="datepicker" value="" class="datepicker">
+                <script> require(["jquery", "mage/calendar"], function ($) {
+                        var today = new Date();
+                        var maxDate = new Date(today);
+                        maxDate.setDate(today.getDate() + <?= $viewModel->getDeliveryDateDelay() ?>);
+                        maxDate.toLocaleDateString();
+                        $("#datepicker").datepicker({
+                            dateFormat: 'dd/mm/yy',
+                            changeMonth: true,
+                            changeYear: true,
+                            minDate: today,
+                            maxDate: maxDate,
+                            firstDay: 1,
+                            showMonthAfterYear: false,
+                        })
+                    }); </script>
+            <br>
+            <?php } ?>
+
+                <!-- Delivery Date -->
+            <?php endif; ?>
+            <div class="actions">
+                <button type="submit"
+                        title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                        class="action primary tocart"
+                        id="product-addtocart-button" disabled>
+                    <span><?= $block->escapeHtml($buttonTitle) ?></span>
+                </button>
+                <?= $block->getChildHtml('', true) ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+
+</script>

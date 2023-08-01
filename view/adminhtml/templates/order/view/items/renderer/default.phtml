@@ -1,0 +1,55 @@
+<?php
+/**
+ * Cozmot
+ *
+ * NOTICE OF LICENSE
+ * This source file is subject to the cozmot.com license that is
+ * available through the world-wide-web at this URL:
+ * https://cozmot.com/end-user-license-agreement
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Commerce
+ * @package     Module
+ * @copyright   Copyright (c) Cozmot (https://cozmot.com/)
+ * @license     https://cozmot.com/end-user-license-agreement
+ *
+ */
+?>
+<?php /** @var \Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer $block */ ?>
+<?php /** @var $viewModel Cozmot\DeliveryDate\ViewModel\DeliveryDate */ ?>
+<?php $_item = $block->getItem() ?>
+<?php $block->setPriceDataObject($_item) ?>
+<?php $viewModel = $block->getViewModel(); ?>
+<tr>
+    <?php $i = 0;
+    $columns = $block->getColumns();
+    $lastItemNumber = count($columns);
+    if ($viewModel->showDeliveryDate()) {
+        $lastItemNumber++;
+    }
+    ?>
+    <?php foreach ($columns as $columnName => $columnClass) : ?>
+        <?php $i++; ?>
+        <td class="<?= /* @noEscape */
+        $columnClass ?><?= /* @noEscape */
+        ($i === $lastItemNumber ? ' last' : '') ?>">
+            <?= $block->getColumnHtml($_item, $columnName) ?>
+        </td>
+    <?php endforeach; ?>
+    <?php
+    if ($viewModel->showDeliveryDate() && $_item->getDeliveryDate()) {
+        $i++;
+        $deliveryDate = $_item->getDeliveryDate();
+        $deliveryDate = date("d-m-Y", strtotime($deliveryDate));
+        $deliveryDate = str_replace('-', '/', $deliveryDate);
+        ?>
+        <td class="delivery-date <?= /* @noEscape */
+        ($i === $lastItemNumber ? ' last' : '') ?>">
+            <span class="delivery-date"><?= $deliveryDate ?></span>
+        </td>
+    <?php } ?>
+</tr>

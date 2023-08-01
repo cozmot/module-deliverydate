@@ -1,0 +1,65 @@
+<?php
+/**
+ * Cozmot
+ *
+ * NOTICE OF LICENSE
+ * This source file is subject to the cozmot.com license that is
+ * available through the world-wide-web at this URL:
+ * https://cozmot.com/end-user-license-agreement
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Commerce
+ * @package     Module
+ * @copyright   Copyright (c) Cozmot (https://cozmot.com/)
+ * @license     https://cozmot.com/end-user-license-agreement
+ *
+ */
+
+/** @var \Magento\Sales\Block\Adminhtml\Order\View\Items $block */
+/** @var $viewModel Cozmot\DeliveryDate\ViewModel\DeliveryDate */
+$_order = $block->getOrder();
+$viewModel = $block->getViewModel(); ?>
+<div class="admin__table-wrapper">
+    <table class="data-table admin__table-primary edit-order-table">
+        <thead>
+        <tr class="headings">
+            <?php $i = 0;
+            $columns = $block->getColumns();
+            $lastItemNumber = count($columns);
+            if ($viewModel->showDeliveryDate()) {
+                $lastItemNumber++;
+            }
+            ?>
+            <?php foreach ($columns as $columnName => $columnTitle) : ?>
+                <?php $i++; ?>
+                <th class="col-<?= $block->escapeHtmlAttr($columnName) ?><?= /* @noEscape */
+                ($i === $lastItemNumber ? ' last' : '') ?>"><span><?= $block->escapeHtml($columnTitle) ?></span></th>
+            <?php endforeach; ?>
+            <?php
+            if ($viewModel->showDeliveryDate()) {
+                $i++; ?>
+                <th class="col-<?= $block->escapeHtmlAttr('Delivery Date') ?><?= /* @noEscape */
+                ($i === $lastItemNumber ? ' last' : '') ?>"><span><?= $block->escapeHtml('Delivery Date') ?></span></th>
+            <?php } ?>
+        </tr>
+        </thead>
+        <?php $_items = $block->getItemsCollection(); ?>
+        <?php $i = 0;
+        foreach ($_items as $_item) : ?>
+            <?php if ($_item->getParentItem()) :
+                continue;
+            else :
+                $i++;
+            endif; ?>
+            <tbody class="<?= /* @noEscape */
+            $i % 2 ? 'even' : 'odd' ?>">
+            <?= $block->getItemHtml($_item) ?>
+            <?= $block->getItemExtraInfoHtml($_item) ?>
+            </tbody>
+        <?php endforeach; ?>
+    </table>
+</div>
